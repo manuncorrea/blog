@@ -27,8 +27,10 @@ class Firebase{
   async register(nome, email, password){
     await app.auth().createUserWithEmailAndPassword(email, password)
 
-    const uid = app.database().ref('usuarios').child(uid).set({
-      nome: nome 
+    const uid = app.auth().currentUser.uid;
+
+    return app.database().ref('usuarios').child(uid).set({
+      nome:nome
     })
   }
 
