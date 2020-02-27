@@ -1,0 +1,32 @@
+div#dashboard{
+  width: 100%;
+  max-width: 930px;
+  margin: 20px auto;
+  padding: 0 30px;
+}
+
+div#dashboard .user-info{
+  display: flex;
+  height: 30px;
+  align-items: center;
+}
+
+div#dashboard .user-info a{
+  margin-left: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 20px;
+  background-color: #A329CC;
+  color: #fff;
+  text-decoration: none;
+}
+
+button#btn-deslogar{
+  margin-top: 10px;
+  font-size: 15px;
+  padding: 8px;
+  border-radius: 4px;
+  background: #FE6601;
+  border-color: #FE6601;
+  color: #fff;
+}
