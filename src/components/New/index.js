@@ -9,12 +9,15 @@ class New extends Component{
     super(props);
     this.state = {
       titulo: '',
-      imagem: '',
+      imagem: null,
+      url: '',
       descricao: '',
       alert: ''
     };
 
     this.cadastrar = this.cadastrar.bind(this);
+    this.handleFile = this.handleFile.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
   }
 
   componentDidMount(){
@@ -45,6 +48,43 @@ class New extends Component{
 
   }
 
+  handleFile = async (e) => {
+    if(e.target.files[0]){
+      const image = e.target.files[0];
+
+      if(image.type === 'image/png' || image.type === 'image/jpeg'){
+        await this.setState({imagem: image});
+        this.handleUpload();
+
+      }else{
+        alert('Envie uma imagem do tipo PNG ou JPG');
+        this.setState({imagem: null});
+        return null;
+      }
+    }
+
+  }
+
+  handleUpload = async () => {
+    const { imagem } = this.state;
+    const currentUid = firebase.getCurrentUid();
+    const uploadTaks = firebase.storge
+    .ref(`images/${currentUid}/${imagem.name}`)
+    .put(imagem);
+
+   /* await uploadTaks.on('state_changed',
+    (snpapshot) =>{
+      //progress
+    },
+    (error) => {
+      //error
+      console.log('Error imagem:' + error);
+    },
+    () => {
+      //sucesso
+    })*/
+  }
+
   render(){
     return(
       <div>
@@ -52,14 +92,15 @@ class New extends Component{
           <Link to="/dashboard">Voltar</Link>
         </header>
         <form onSubmit={this.cadastrar} id="new-post">
+
           <span>{this.state.alert}</span>
+
+          <input type="file"
+          onChange={this.handleFile} /><br />
+
           <label>Titulo</label><br/>
           <input type="text" placeholder="Nome do post" value={this.state.titulo} autoFocus
           onChange={(e) => this.setState({titulo: e.target.value})}/><br/>
-
-          <label>URL da imagem</label><br/>
-          <input type="text" placeholder="URL da capa" value={this.state.imagem} 
-          onChange={(e) => this.setState({imagem: e.target.value})}/><br/>
 
           <label>Descrição</label><br/>
           <textarea type="text" placeholder="Descrição do Post..." value={this.state.descricao} 
