@@ -1,4 +1,4 @@
-import app from 'firebase/app'
+import app from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 import 'firebase/storage';
@@ -21,7 +21,7 @@ class Firebase{
     //Referenciando a database para acessar em outros locais
     this.app = app.database();
 
-    this.storge = app.storage();
+    this.storage = app.storage();
 
   }
 
@@ -31,7 +31,7 @@ class Firebase{
 
   //Deslogar
   logout(){
-    return app.auth().signOut()
+    return app.auth().signOut();
   }
 
   
@@ -41,7 +41,7 @@ class Firebase{
     const uid = app.auth().currentUser.uid;
 
     return app.database().ref('usuarios').child(uid).set({
-      nome:nome
+      nome: nome
     })
   }
 
@@ -66,7 +66,7 @@ class Firebase{
 
     const uid = app.auth().currentUser.uid;
     await app.database().ref('usuarios').child(uid)
-    .once ('value').then(callback);
+    .once('value').then(callback);
   }
 
 
